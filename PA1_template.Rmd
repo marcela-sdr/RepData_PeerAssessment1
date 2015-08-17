@@ -15,6 +15,7 @@ if(!file.exists("activity.csv")) {
                 unzip(temp, "activity.csv")
                 unlink(temp)
         }
+amd <- read.csv("activity.csv")
 head(amd)
 tail(amd)
 ```
@@ -22,7 +23,7 @@ tail(amd)
 Process/transform the data (if necessary) into a format suitable for your analysis
 
 ```{r}
-
+amd2 <- amd[!(is.na(amd$steps)), ]
 ```
 
 ## What is mean total number of steps taken per day?
@@ -31,32 +32,46 @@ For this part of the assignment, you can ignore the missing values in the datase
 Calculate the total number of steps taken per day
 
 ```{r}
-
+library(plyr)
+ss <- ddply(amd2, "date", summarise, sum.steps = sum(steps))
+head(ss)
+tail(ss)
 ```
 If you do not understand the difference between a histogram and a barplot, research the difference
 
 between them. Make a histogram of the total number of steps taken each day
 ```{r}
-
-
+hist(ss$sum.steps, 
+     main = c("Histogram of the total number of steps taken each day"), 
+     xlab = c("Total number of steps per day"))
 ```
  
 
 Calculate and report the mean and median of the total number of steps taken per day
 ```{r}
+mean.steps <- mean(ss$sum.steps)
+print(mean.steps)
+
+median.steps <- median(ss$sum.steps)
+print(median.steps)
 
 ```
 
 ## What is the average daily activity pattern?
-Make a time series plot (i.e.Â type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
+Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
 ```{r}
-
+as <- ddply(amd2, "interval", summarise, average = mean(steps))
+plot(as$interval, as$average, type="l", 
+     main = c("Time series plot of average number of steps"), 
+     xlab = c("5-minute interval"), ylab = c("Average number of steps taken"))
 ```
  
 
 Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 ```{r}
-
+max(as$average)
+max.interval <- as[(as$average > 206),1]
+print(max.interval)
 ```
 
 
