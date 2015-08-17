@@ -140,6 +140,10 @@ print(max.interval)</code></pre>
 <h2>Imputing missing values</h2>
 <p>Note that there are a number of days/intervals where there are missing values (coded asÂ NA). The presence of missing days may introduce bias into some calculations or summaries of the data.</p>
 <p>Calculate and report the total number of missing values in the dataset (i.e. the total number of rows withÂ NAs)</p>
+<pre class="r"><code>NA.amd &lt;- count(amd[is.na(amd$steps), ])
+total.NA &lt;- sum(NA.amd$freq)
+print(total.NA)</code></pre>
+<pre><code>## [1] 2304</code></pre>
 <p>Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.</p>
 <p>Create a new dataset that is equal to the original dataset but with the missing data filled in.</p>
 <p>Make a histogram of the total number of steps taken each day and Calculate and report theÂ meanÂ andmedianÂ total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?</p>
